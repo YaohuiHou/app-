@@ -14,7 +14,7 @@
 	    }
 	  },
 	  created () {
-	    
+			
 		},
 		methods:{
 			share(){

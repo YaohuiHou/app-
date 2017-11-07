@@ -30,7 +30,7 @@
           >
           </help-list>
           <!-- 吸低footer -->
-        <!-- <inputView @onshare="shareFun" @oninsert="inserthelp"></inputView> -->
+        <inputView @onshare="shareFun" @oninsert="inserthelp" v-if="inputFooterShow"></inputView>
         <loadView :completedShow="completedShow" :loading="loading" :nothing="nothing"></loadView>
       </div>
     </transition>
@@ -49,7 +49,7 @@ import XHR from './api'
 import SetLayload from './components/lazload/set-layload.vue'
 import helpDetail from './components/detail.vue'
 import helpList from './components/list.vue'
-// import inputView from './components/input.vue'
+import inputView from './components/input.vue'
 import loadView from './components/load.vue'
 import deleteView from './components/delete.vue'
 export default {
@@ -57,7 +57,7 @@ export default {
     SetLayload,
     helpDetail,
     helpList,
-    // inputView,
+    inputView,
     loadView,
     deleteView
   },
@@ -87,7 +87,9 @@ export default {
       // 求助id
       helpId: '',
       // 下标
-      commentText: {}
+      commentText: {},
+      // inputview 展示
+      inputFooterShow: true
     }
   },
   created () {
@@ -170,6 +172,8 @@ export default {
       const COOKIE = document.cookie;
       
       if(/360CHE/i.test(navigator.userAgent)){      // 判断是否在app
+        // 吸低input 关闭
+        this.inputFooterShow = false
         //  获取ua
           var UAuid = navigator.userAgent.match(/USERID\/([^ $]+)/i);
           // 获取cookie
