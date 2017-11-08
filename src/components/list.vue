@@ -71,10 +71,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
   .help-list{
     padding: 0 16px;
     border-top: 8px solid #F7F9FA;
     background: #fff;
+    :nth-of-type(1){
+      .help-header{
+        border: none;
+      }
+    }
   }
+  
 </style>

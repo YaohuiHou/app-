@@ -28,7 +28,7 @@
       <!-- 别人的帖子 -->
       <div class="follow" v-if="thisuserid != userid">
         <span class="number">{{detailData.focusoncount}} 人已关注</span>
-        <span :class="['problem', detailData.isfocuson == 1 ? 'already' : '']" @click="problem">关注问题</span>
+        <span :class="['problem', detailData.isfocuson == 1 ? 'already' : '']" @click="problem">{{ detailData.isfocuson ? '取消关注':'关注问题'}}</span>
       </div>
       <!-- 我的求助 -->
       <div class="my-help" v-else>
@@ -98,7 +98,7 @@ export default {
         align-item: center;
         height: 14px;
         line-height: 14px;
-        font-size: 12px;
+        font-size: 14px;
         color: #5981B3;
         .name{
           max-width: 140px;
@@ -308,7 +308,6 @@ export default {
           color: #fff;
           background: #FF9300;
           border-radius: 3px;
-          margin-right: 8px;
         }
         .delete{
           display: inline-block;

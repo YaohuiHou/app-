@@ -39,7 +39,7 @@
       // 采纳传值
       validity (h,f) {
         // 展示文案
-        if(this.issolve){
+        if(!this.issolve){
           this.headerText = '卡车之家温馨提示';
           this.propText = '采纳'+ this.header.nikename +'的答案为最有效的答案';
           this.cancelShow = true;
@@ -60,7 +60,7 @@
 <style scoped>
   .help-header{
     padding-top: 16px;
-    border-top: 1px solid #EEE;
+    border-top: 1px solid rgba(23,24,26,.08);
     display: flex;
     flex-wrap: nowrap;
   }
@@ -83,18 +83,20 @@
     line-height: 14px;
     height: 14px;
     padding-bottom: 4px;
+    display: flex;
+    flex-direction: row;
   }
   .type{
     padding-bottom: 0;
   }
   .name{
     color: #5981B3;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 14px;
   }
   .carbrand{
     color: #5C6066;
-    margin-right: 8px;
+    margin-right: 4px;
   }
   .time{
     font-size: 12px;

@@ -54,23 +54,24 @@
   .praises{
     position: absolute;
     right: 0;
-    top: 0;
+    top: 2px;
     min-width: 135px;
     display: flex;
     justify-content: flex-end;
   }
   .information{
-    color: #A1A9B3;
+    color: #a1a9b3;
     font-size: 14px;
     line-height: 38px;
     &:before{
-      content: "\56de";
+      content: "\590d";
       font-family: 'iconfont';
       color: #A1A9B3;
       display: inline-block;
       width: 13px;
       height: 13px;
       margin-right: 4px;
+      font-size: 12px;
     }
   }
   .no-praise{
@@ -80,13 +81,14 @@
     position: relative;
     padding-right: 9px;
     &:before{
-      content: "\4e0d";
+      content: "\8d5e";
       font-family: 'iconfont';
-      color: #A1A9B3;
+      color: #a1a9b3;
       display: inline-block;
       width: 13px;
       height: 13px;
       margin-right: 4px;
+      font-size: 12px;
     }
     &:after{
       content: "";

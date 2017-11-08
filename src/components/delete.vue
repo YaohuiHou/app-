@@ -43,7 +43,12 @@
       },
       // 提示是否删除
       deleteShow(n){
-        this.$emit('deleteShow',n)
+        if(this.cancelShow){
+          this.$emit('deleteShow',n)
+        }else{
+          this.$emit('deleteShow',!n)
+        }
+        
         this.promptShow = false
       },
       // 点击弹层关闭

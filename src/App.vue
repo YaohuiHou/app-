@@ -80,7 +80,9 @@ export default {
       loading: false,
       nothing: false,
       completedShow: false,
-      userid: 0,
+      userid: 525895,
+      // 加密字符串
+      auth:'',
       thisuserid: 0,
       pageB: false,
       page: '1',
@@ -139,7 +141,7 @@ export default {
               "hid":me.commentText.hid,//帮助ID
               "nickname": data.commentNickName,//评论用户名
               "tonickname": data.commentPUserName,//回复用户
-              "img": data.img ? data.img : ''
+              "img": data.imgurl ? data.imgurl : ''
             }
             me.helpData[me.commentText.lengthNum].comment.push(obj)
             me.helpData[me.commentText.lengthNum].commentcount +=1
@@ -150,6 +152,7 @@ export default {
           var data = JSON.parse(data);
           if(!data.status){
             me.helpData.push( data )
+            me.nothing = false
           }
       })
     })
@@ -159,10 +162,13 @@ export default {
       // 遮罩层
       this.maskShow = true
     },
-    // 确定删除帖子
+    // 弹窗
     deleteShow(n){
       this.maskShow = false;
-      if(!this.detailData.issolve){
+      // 页面滑动
+      document.querySelector('.wrapper').style.overflow='auto';//出现滚动条
+
+      if(!this.detailData.issolve && n){
         // 采纳
         this.validityFun();
       }
@@ -176,11 +182,11 @@ export default {
         this.inputFooterShow = false
         //  获取ua
           var UAuid = navigator.userAgent.match(/USERID\/([^ $]+)/i);
+          var Auth = document.cookie.match(/AbcfN_authapp=([^;$]+)/)
           // 获取cookie
           var Cookieuid = document.cookie.match(/ForHelp_ajaxuid=([^;$]+)/);
           var iOSCookieuid = document.cookie.match(/AbcfN_ajaxuid=([^;$]+)/);
-          var UID = 0;
-
+          var UID = 0,AuthStr = '';
           if(UAuid && parseInt(UAuid[1]) != 0){
               UID = parseInt(UAuid[1]);
           }else if(Cookieuid && Cookieuid[1]){
@@ -188,10 +194,16 @@ export default {
           }else if(iOSCookieuid && iOSCookieuid[1]){
               UID = iOSCookieuid[1]
           }
+
           this.userid = UID;
+
+          // 获取加密字符串
+          if(Auth && Auth[1]){
+            AuthStr = Auth[1]
+            this.auth = AuthStr
+          }
       }else{
         let uid = COOKIE.match(/AbcfN_ajaxuid=([^;$]+)/);
-        let uname = COOKIE.match(/AbcfN_nickname=([^;$]+)/);
         if(uid && uid[1]){
           this.userid = uid[1]
         }
@@ -281,7 +293,8 @@ export default {
           fid: o.fid,
           hid: o.hid,
           userid: this.userid,
-          type: o.type
+          type: o.type,
+          auth: this.auth
         }
         let nopraise = this.helpData[o.lengthNum].nopraise
         let praise = this.helpData[o.lengthNum].praise
@@ -312,6 +325,8 @@ export default {
             this.helpData[o.lengthNum].ispraise = 1
             this.helpData[o.lengthNum].nopraise = nopraise
             this.helpData[o.lengthNum].praise = praise
+          }else{
+            alert(res.data.message)
           }
         })
       }
@@ -339,7 +354,8 @@ export default {
       if(!this.userid) return;
       var json = {
         fid: o.fid,
-        userid: this.userid
+        userid: this.userid,
+        auth: this.auth
       }
       var me = this
       XHR.focuson(json).then((res) => {
@@ -350,7 +366,9 @@ export default {
           }else{
             this.detailData.focusoncount -= 1
           }
-        }
+        }else{
+            alert(res.data.message)
+          }
       })
     },
     // 采纳弹窗
@@ -360,8 +378,10 @@ export default {
         hid: o.hid,
         lengthNum: o.lengthNum
       }
-      this.maskShow = true;
+      // 禁止滑动
+      document.querySelector('.wrapper').style.overflow='hidden';
 
+      this.maskShow = true;
       this.headerText = o.headerText
       // 展示文案
       this.propText = o.propText;
@@ -379,7 +399,9 @@ export default {
       var o = this.validity
       var json = {
         fid: o.fid,
-        hid: o.hid
+        hid: o.hid,
+        userid: this.userid,
+        auth: this.auth
       }
       var me = this
       me.helpData.forEach((e,i)=>{
@@ -389,6 +411,15 @@ export default {
         XHR.validity(json).then((res) => {
           if(res.data && !res.data.status){
             this.helpData[o.lengthNum].isvalid = 1
+          }else{
+            this.confirm({
+              fid: o.fid,
+              hid: o.hid,
+              lengthNum: o.lengthNum,
+              headerText:o.headerText,
+              propText: res.data.message,
+              cancelShow: false
+            })
           }
         })
       }

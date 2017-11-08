@@ -34,6 +34,7 @@
 		text-align: center;
 		font-size: 12px;
 		color: #999;
+		background: #F7F9FA;
 	}
 	.loading{
     position: relative;

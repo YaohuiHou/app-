@@ -89,19 +89,34 @@ export default {
     margin-top: 8px;
   }
   .comments{
+    position: relative;
     background: #f5f5f5;
     border-radius: 2px;
     padding: 8px 16px;
+    margin-top: 8px;
+    &:before{
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: -2px;
+      width: 4px;
+      height: 4px;
+      background-color: #f3f4f5;
+      border-bottom: 1px solid #f3f4f5;
+      border-right: 1px solid #f3f4f5;
+      -webkit-transform: rotate(135deg);
+      transform: rotate(135deg);
+    }
   }
   .comments p{
     font-size: 14px;
-    color: #0B0C00;
+    color: #5C6066;
     line-height: 20px;
     word-wrap: break-word;
     margin-bottom: 4px;
   }
   .comments p span{
-    color: #1571E5;
+    color: #5981B3;
   }
   .comments p em,.comments p em span{
     padding-left: 1px;
