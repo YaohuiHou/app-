@@ -80,7 +80,7 @@ export default {
       loading: false,
       nothing: false,
       completedShow: false,
-      userid: 525895,
+      userid: 0,
       // 加密字符串
       auth:'',
       thisuserid: 0,
